@@ -11,7 +11,10 @@ import SwiftUI
 struct iChatApp: App {
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            NavigationStack {
+                ContentView()
+            }
+            .navigationViewStyle(.stack)
         }
     }
 }
