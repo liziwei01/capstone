@@ -19,6 +19,8 @@
 		CAFD31DD2ABCF33600B92BD5 /* General.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAFD31DC2ABCF33600B92BD5 /* General.swift */; };
 		CAFD31DF2ABCF39E00B92BD5 /* Server.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAFD31DE2ABCF39E00B92BD5 /* Server.swift */; };
 		CAFD31E12ABCF51200B92BD5 /* Request.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAFD31E02ABCF51200B92BD5 /* Request.swift */; };
+		CAFDCAEB2AC6FFDE00048E55 /* Client.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAFDCAEA2AC6FFDE00048E55 /* Client.swift */; };
+		CAFDCAED2AC70B4700048E55 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAFDCAEC2AC70B4700048E55 /* User.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -54,6 +56,8 @@
 		CAFD31DC2ABCF33600B92BD5 /* General.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = General.swift; sourceTree = "<group>"; };
 		CAFD31DE2ABCF39E00B92BD5 /* Server.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Server.swift; sourceTree = "<group>"; };
 		CAFD31E02ABCF51200B92BD5 /* Request.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Request.swift; sourceTree = "<group>"; };
+		CAFDCAEA2AC6FFDE00048E55 /* Client.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Client.swift; sourceTree = "<group>"; };
+		CAFDCAEC2AC70B4700048E55 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -105,7 +109,6 @@
 			isa = PBXGroup;
 			children = (
 				CAFD31D72ABCED4400B92BD5 /* modules */,
-				CAFD31D42ABCEBEF00B92BD5 /* conf */,
 				CAFD31D22ABCEB4800B92BD5 /* library */,
 				CA2B5FE82AB7DFC200749787 /* iChatApp.swift */,
 				CA2B5FEA2AB7DFC200749787 /* ContentView.swift */,
@@ -143,6 +146,8 @@
 		CAFD31D22ABCEB4800B92BD5 /* library */ = {
 			isa = PBXGroup;
 			children = (
+				CAFD31D42ABCEBEF00B92BD5 /* conf */,
+				CAFDCAE52AC5FBE800048E55 /* sqlite */,
 				CAFD31D32ABCEB4F00B92BD5 /* request */,
 			);
 			path = library;
@@ -186,8 +191,17 @@
 			children = (
 				CAFD31DC2ABCF33600B92BD5 /* General.swift */,
 				CAFD31DE2ABCF39E00B92BD5 /* Server.swift */,
+				CAFDCAEC2AC70B4700048E55 /* User.swift */,
 			);
 			path = general;
+			sourceTree = "<group>";
+		};
+		CAFDCAE52AC5FBE800048E55 /* sqlite */ = {
+			isa = PBXGroup;
+			children = (
+				CAFDCAEA2AC6FFDE00048E55 /* Client.swift */,
+			);
+			path = sqlite;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -325,7 +339,9 @@
 				CAFD31DA2ABCED6F00B92BD5 /* Settings.swift in Sources */,
 				CA2B5FE92AB7DFC200749787 /* iChatApp.swift in Sources */,
 				CAFD31E12ABCF51200B92BD5 /* Request.swift in Sources */,
+				CAFDCAED2AC70B4700048E55 /* User.swift in Sources */,
 				CAFD31DF2ABCF39E00B92BD5 /* Server.swift in Sources */,
+				CAFDCAEB2AC6FFDE00048E55 /* Client.swift in Sources */,
 				CAFD31DD2ABCF33600B92BD5 /* General.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

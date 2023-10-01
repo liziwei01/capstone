@@ -12,6 +12,11 @@ struct GeneralView: View {
         VStack{
             NavigationView {
                 Form{
+                    Section(header: Text("User")) {
+                        NavigationLink("Nickname") {
+                            UserView()
+                        }
+                    }
                     Section(header: Text("Server")) {
                         NavigationLink("Server Address") { ServerView() }
                     }
