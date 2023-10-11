@@ -44,7 +44,6 @@ final class iChatTests: XCTestCase {
         chatClient.ClearSessionTable()
 
         chatClient.AddSession(secretKey: secretKey, nickname: nickname, dbTime: dbTime)
-        chatClient.AddSession(secretKey: secretKey, nickname: nickname, dbTime: dbTime+1)
 
         let sessions = chatClient.GetSessions()
 
@@ -53,9 +52,13 @@ final class iChatTests: XCTestCase {
     
     // Test the insertion of a message and retrieval of messages for a session.
     func testInsertMessageAndGetMessages() {
-        let message = "Hello, world!"
+        let secretKey = "TestSecretKey"
+        let nickname = "TestUser"
         let dbTime: Int64 = Int64(Date().timeIntervalSince1970)
         
+        let message = "Hello, world!"
+        
+        chatClient.AddSession(secretKey: secretKey, nickname: nickname, dbTime: dbTime)
         let sessions = chatClient.GetSessions()
         guard let session = sessions.last else {
             XCTFail("No session found")
@@ -64,7 +67,7 @@ final class iChatTests: XCTestCase {
         
         chatClient.ClearMessageTable()
 
-        chatClient.InsertMessage(sessionID: session.id, message: message, dbTime: dbTime)
+        chatClient.InsertMessage(sessionID: session.id, nickname: "123", message: message, dbTime: dbTime)
 
         let messages = chatClient.GetMessages(sessionID: session.id)
 
@@ -76,6 +79,27 @@ final class iChatTests: XCTestCase {
         // This is an example of a performance test case.
         self.measure {
             // Put the code you want to measure the time of here.
+        }
+    }
+    
+    func testPerformanceOfInsertingMessage() throws {
+        let secretKey = "TestSecretKey"
+        let nickname = "TestUser"
+        let dbTime: Int64 = Int64(Date().timeIntervalSince1970)
+        let message = "Hello, world!"
+        
+        chatClient.ClearSessionTable()
+        chatClient.AddSession(secretKey: secretKey, nickname: nickname, dbTime: dbTime)
+        let sessions = chatClient.GetSessions()
+        guard let session = sessions.last else {
+            XCTFail("No session found")
+            return
+        }
+        chatClient.ClearMessageTable()
+
+        // Measure performance
+        self.measure {
+            chatClient.InsertMessage(sessionID: session.id, nickname: "123", message: message, dbTime: dbTime)
         }
     }
 
