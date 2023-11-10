@@ -14,6 +14,7 @@
 		CA2B5FFA2AB7DFC300749787 /* iChatTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA2B5FF92AB7DFC300749787 /* iChatTests.swift */; };
 		CA2B60042AB7DFC300749787 /* iChatUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA2B60032AB7DFC300749787 /* iChatUITests.swift */; };
 		CA2B60062AB7DFC300749787 /* iChatUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA2B60052AB7DFC300749787 /* iChatUITestsLaunchTests.swift */; };
+		CA5727262AD963E800F1E85F /* ChatExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA5727252AD963E800F1E85F /* ChatExtension.swift */; };
 		CA7071B32AD6649B0045AFD8 /* TOTP.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA7071B22AD6649B0045AFD8 /* TOTP.swift */; };
 		CA7071B52AD664B60045AFD8 /* Encrypt.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA7071B42AD664B60045AFD8 /* Encrypt.swift */; };
 		CAB913B02ACB6FF60099C45C /* NewChatSessionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAB913AF2ACB6FF60099C45C /* NewChatSessionView.swift */; };
@@ -56,6 +57,7 @@
 		CA2B5FFF2AB7DFC300749787 /* iChatUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = iChatUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		CA2B60032AB7DFC300749787 /* iChatUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = iChatUITests.swift; sourceTree = "<group>"; };
 		CA2B60052AB7DFC300749787 /* iChatUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = iChatUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		CA5727252AD963E800F1E85F /* ChatExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatExtension.swift; sourceTree = "<group>"; };
 		CA7071B22AD6649B0045AFD8 /* TOTP.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TOTP.swift; sourceTree = "<group>"; };
 		CA7071B42AD664B60045AFD8 /* Encrypt.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Encrypt.swift; sourceTree = "<group>"; };
 		CAB913AF2ACB6FF60099C45C /* NewChatSessionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewChatSessionView.swift; sourceTree = "<group>"; };
@@ -174,6 +176,7 @@
 			isa = PBXGroup;
 			children = (
 				CAD901BC2AD3CF57003473BB /* ChatDetailView.swift */,
+				CA5727252AD963E800F1E85F /* ChatExtension.swift */,
 			);
 			path = chat;
 			sourceTree = "<group>";
@@ -376,6 +379,7 @@
 				CAB913B02ACB6FF60099C45C /* NewChatSessionView.swift in Sources */,
 				CAFD31D62ABCEC3B00B92BD5 /* Conf.swift in Sources */,
 				CA2B5FEB2AB7DFC200749787 /* ContentView.swift in Sources */,
+				CA5727262AD963E800F1E85F /* ChatExtension.swift in Sources */,
 				CAFD31DA2ABCED6F00B92BD5 /* Settings.swift in Sources */,
 				CA2B5FE92AB7DFC200749787 /* iChatApp.swift in Sources */,
 				CAD901BF2AD3D753003473BB /* Polling.swift in Sources */,

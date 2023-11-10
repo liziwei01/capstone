@@ -19,10 +19,10 @@ class Conf: ObservableObject {
 //    @Published var db: OpaquePointer?
     
     init() {
-        ServerIPPort = "http://localhost:8090"
+        ServerIPPort = "https://127.0.0.1:8000"
         GetChatRouterFormat = "/getChat?time=%@&key_nickname=%@"
         PostChatRouterFormat = "/postChat"
-        Nickname = ""
+        Nickname = "default_user"
     }
 }
 

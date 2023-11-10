@@ -30,3 +30,7 @@ func GetHashedString(_ s: String, _ n: Int64) -> String {
     // Take the result modulo 10^6 and format it with leading zeros
     return String(format: "%06d", result % 1_000_000)
 }
+
+func Now() -> Int64 {
+    return Int64(Date().timeIntervalSince1970)
+}

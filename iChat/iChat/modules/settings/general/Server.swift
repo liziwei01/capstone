@@ -14,7 +14,7 @@ struct ServerView: View {
         NavigationView {
             Form{
                 TextField(
-                    "https://127.0.0.1:8080",
+                    "https://127.0.0.1:8000",
                     text: $confLocal.ServerIPPort
                 )
             }

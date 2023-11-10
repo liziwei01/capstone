@@ -16,13 +16,13 @@ final class iChatTests: XCTestCase {
     override func setUpWithError() throws {
         // Put setup code here. This method is called before the invocation of each test method in the class.
         super.setUp()
-        // 在每个测试用例运行之前创建一个 ChatClient 的实例
+        // Create an instance of ChatClient before each test case is run
         chatClient = ChatClient()
     }
 
     override func tearDownWithError() throws {
         // Put teardown code here. This method is called after the invocation of each test method in the class.
-        // 在每个测试用例运行之后销毁 ChatClient 的实例
+        // Destroy the instance of ChatClient after each test case runs
         chatClient = nil
         super.tearDown()
     }
@@ -35,8 +35,27 @@ final class iChatTests: XCTestCase {
         // Mark your test async to allow awaiting for asynchronous code to complete. Check the results with assertions afterwards.
     }
     
+    func testAESEncryptionDecryption() throws {
+        // Given
+        let originalString = "This is a string to encrypt"
+        let keyString = "thisisaverysecurekey123456789012"
+        guard let encryptedString = AESEncryptWithString(input: originalString, key: keyString) else {
+            XCTFail("Encryption failed")
+            return
+        }
+        
+        // When
+        guard let decryptedString = AESDecryptWithString(input: encryptedString, key: keyString) else {
+            XCTFail("Decryption failed")
+            return
+        }
+        
+        // Then
+        XCTAssertEqual(originalString, decryptedString, "Decrypted string should equal original string")
+    }
+    
     // Test the creation of a session and retrieval of sessions.
-    func testAddSessionAndGetSessions() {
+    func testAddSessionAndGetSessions() throws {
         let secretKey = "TestSecretKey"
         let nickname = "TestUser"
         let dbTime: Int64 = Int64(Date().timeIntervalSince1970)
@@ -51,7 +70,7 @@ final class iChatTests: XCTestCase {
     }
     
     // Test the insertion of a message and retrieval of messages for a session.
-    func testInsertMessageAndGetMessages() {
+    func testInsertMessageAndGetMessages() throws {
         let secretKey = "TestSecretKey"
         let nickname = "TestUser"
         let dbTime: Int64 = Int64(Date().timeIntervalSince1970)
@@ -67,13 +86,30 @@ final class iChatTests: XCTestCase {
         
         chatClient.ClearMessageTable()
 
-        chatClient.InsertMessage(sessionID: session.id, nickname: "123", message: message, dbTime: dbTime)
+        chatClient.InsertMessage(sessionID: session.id, isUser: true, nickname: "123", message: message, dbTime: dbTime)
 
         let messages = chatClient.GetMessages(sessionID: session.id)
 
         XCTAssertTrue(messages.count > 0, "Messages should not be empty after inserting a message")
         XCTAssertEqual(messages.last?.message, message, "Inserted message should match the retrieved message")
     }
+    
+	func testGetAction() throws {
+        let chatSessionSecretKey = "testSecretKey2"
+		let contentsDict = GetChatAPI(secretKey: chatSessionSecretKey, lastTime: 12345)
+        print(contentsDict)
+	}
+
+    func testSendAction() throws {
+        let chatSessionSecretKey = "testSecretKey2"
+        let currentMessage = "Test Message5"
+        
+        let now = Now()
+        
+        let response = SendChatAPI(secretKey: chatSessionSecretKey, currentMessage: currentMessage, time: now)
+        print(response)
+    }
+
 
     func testPerformanceExample() throws {
         // This is an example of a performance test case.
@@ -99,8 +135,9 @@ final class iChatTests: XCTestCase {
 
         // Measure performance
         self.measure {
-            chatClient.InsertMessage(sessionID: session.id, nickname: "123", message: message, dbTime: dbTime)
+            chatClient.InsertMessage(sessionID: session.id, isUser: true, nickname: "123", message: message, dbTime: dbTime)
         }
     }
-
 }
+
+// FIXED: 前后端联调，postman用xxx数据格式和URLRequest格式不一样

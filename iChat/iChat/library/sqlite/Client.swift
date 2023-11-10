@@ -33,8 +33,8 @@ class ChatClient {
     
     init() {
         open()
-//        deleteSessionTable()
-//        deleteMessgaeTable()
+        deleteSessionTable()
+        deleteMessgaeTable()
         createSessionTable()
         createMessageTable()
     }
@@ -53,9 +53,9 @@ class ChatClient {
         let createSessionTableSQL = """
             CREATE TABLE IF NOT EXISTS tb_chat_session (
                 id INTEGER PRIMARY KEY AUTOINCREMENT,
-                secret_key TEXT,
-                nickname TEXT,
-                db_time INTEGER
+                secret_key TEXT DEFAULT '',
+                nickname TEXT DEFAULT '',
+                db_time INTEGER DEFAULT 0
             );
         """
         if ExecRaw(createSessionTableSQL) != SQLITE_OK {
@@ -68,10 +68,11 @@ class ChatClient {
         let createMessageTableSQL = """
             CREATE TABLE IF NOT EXISTS tb_chat_message (
                 id INTEGER PRIMARY KEY AUTOINCREMENT,
-                session_id INTEGER,
-                nickname TEXT,
-                message TEXT,
-                db_time INTEGER,
+                session_id INTEGER NOT NULL,
+                is_user BOOLEAN DEFAULT FALSE,
+                nickname TEXT DEFAULT '',
+                message TEXT DEFAULT '',
+                db_time INTEGER DEFAULT 0,
                 FOREIGN KEY (session_id) REFERENCES tb_chat_session (id)
             );
         """
@@ -118,15 +119,16 @@ class ChatClient {
     func GetMessages(sessionID: Int32) -> [ChatMessage] {
         var messages: [ChatMessage] = []
 
-        let queryMessagesSQL = "SELECT id, nickname, message, db_time FROM tb_chat_message WHERE session_id = ?;"
+        let queryMessagesSQL = "SELECT id, is_user, nickname, message, db_time FROM tb_chat_message WHERE session_id = ?;"
         if let statement = prepareStatement(sql: queryMessagesSQL) {
             sqlite3_bind_int(statement, 1, Int32(sessionID))
             while sqlite3_step(statement) == SQLITE_ROW {
                 let id = Int(sqlite3_column_int(statement, 0))
-                let nickname = String(cString: sqlite3_column_text(statement, 1))
-                let message = String(cString: sqlite3_column_text(statement, 2))
-                let dbTime = Int64(sqlite3_column_int64(statement, 3))
-                let chatMessage = ChatMessage(id: id, sessionID: sessionID, nickname: nickname, message: message, dbTime: dbTime)
+                let isUser = sqlite3_column_int(statement, 1) != 0
+                let nickname = String(cString: sqlite3_column_text(statement, 2))
+                let message = String(cString: sqlite3_column_text(statement, 3))
+                let dbTime = Int64(sqlite3_column_int64(statement, 4))
+                let chatMessage = ChatMessage(id: id, isUser: isUser, sessionID: sessionID, nickname: nickname, message: message, dbTime: dbTime)
                 messages.append(chatMessage)
             }
             sqlite3_finalize(statement)
@@ -186,16 +188,17 @@ class ChatClient {
     }
     
     // Insert a message
-    func InsertMessage(sessionID: Int32, nickname: String, message: String, dbTime: Int64) {
+    func InsertMessage(sessionID: Int32, isUser: Bool, nickname: String, message: String, dbTime: Int64) {
         let insertMessageSQL = """
-            INSERT INTO tb_chat_message (session_id, db_time, nickname, message)
-            VALUES (?, ?, ?, ?);
+            INSERT INTO tb_chat_message (session_id, is_user, nickname, message, db_time)
+            VALUES (?, ?, ?, ?, ?);
         """
         if let statement = prepareStatement(sql: insertMessageSQL) {
             sqlite3_bind_int(statement, 1, sessionID)
-            sqlite3_bind_int64(statement, 2, dbTime)
+            sqlite3_bind_int(statement, 2, isUser ? 1 : 0)
             sqlite3_bind_text(statement, 3, (nickname as NSString).utf8String, Int32(nickname.utf8.count), nil)
             sqlite3_bind_text(statement, 4, (message as NSString).utf8String, Int32(message.utf8.count), nil)
+            sqlite3_bind_int64(statement, 5, dbTime)
             
             if sqlite3_step(statement) != SQLITE_DONE {
                 print("Error inserting message")
@@ -299,6 +302,7 @@ struct ChatSession: Identifiable, Hashable  {
 // Must be Hashable so we can put ChatMessages into ForEach
 struct ChatMessage: Identifiable, Hashable  {
     let id: Int
+    let isUser: Bool
     let sessionID: Int32
     let nickname: String
     let message: String

@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct ContentView: View {
-    @State private var sessions = [ChatSession(id: 0, secretKey: "key1", nickname: "qwang1", dbTime: 123456789), ChatSession(id: 1, secretKey: "key2", nickname: "qwang2", dbTime: 123456789), ChatSession(id: 2, secretKey: "key3", nickname: "qwang3", dbTime: 123456789)]
+    @State private var sessions = client.GetSessions()
     @State private var showingSheet = false
     @State private var editMode = EditMode.inactive
     
@@ -48,7 +48,9 @@ struct ContentView: View {
         }
         .sheet(isPresented: $showingSheet) {
             NewChatSessionView { secretKey, nickname in
-                let dbTime = Int64(Date().timeIntervalSince1970)
+                let dbTime = Now()
+                print(secretKey)
+                print(nickname)
                 client.AddSession(secretKey: secretKey, nickname: nickname, dbTime: dbTime)
                 sessions.append(ChatSession(id: Int32(sessions.count), secretKey: secretKey, nickname: nickname, dbTime: dbTime))
                 showingSheet = false

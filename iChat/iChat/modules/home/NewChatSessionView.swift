@@ -8,8 +8,8 @@
 import SwiftUI
 
 struct NewChatSessionView: View {
-    @State private var secretKey = ""
-    @State private var nickname = ""
+    @State private var secretKey: String = ""
+    @State private var nickname: String = ""
     var addSession: (String, String) -> Void
     
     var body: some View {
@@ -37,3 +37,6 @@ struct NewChatSessionView_Previews: PreviewProvider {
     }
 }
 
+// FIXED: 弹窗addSession闭包调用
+
+// UNFIXED: 输入Secret Key和Nickname会报错Error: this application, or a library it uses, has passed an invalid numeric value (NaN, or not-a-number) to CoreGraphics API and this value is being ignored. Please fix this problem. 定位不到问题

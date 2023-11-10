@@ -18,7 +18,9 @@ struct GeneralView: View {
                         }
                     }
                     Section(header: Text("Server")) {
-                        NavigationLink("Server Address") { ServerView() }
+                        NavigationLink("Server Address") {
+                            ServerView()
+                        }
                     }
                 }
             }
