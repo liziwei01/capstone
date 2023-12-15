@@ -9,13 +9,16 @@ import SwiftUI
 
 struct ChatDetailView: View {
     @Binding var chatSession: ChatSession
+    @State private var messages: [ChatMessage] = []
     @State private var currentMessage: String = ""
     @ObservedObject var observer: ChatObserver
-
+    @State private var timer: Timer? = nil
+    
     // Fetching the messages when the view appears
     init(chatSession: ChatSession) {
         _chatSession = Binding.constant(chatSession)
         _observer = ObservedObject(initialValue: ChatObserver(sessionID: chatSession.id))
+        messages = client.GetMessages(sessionID: chatSession.id)
     }
 
     var body: some View {
@@ -39,6 +42,11 @@ struct ChatDetailView: View {
             }
             .onAppear {
                 observer.refreshMessages()
+                timer = Timer.scheduledTimer(withTimeInterval: 5.0, repeats: true) { _ in
+                    messages = client.GetMessages(sessionID: chatSession.id)
+                    print("messages:")
+                    print(messages)
+                }
             }
             
             HStack {

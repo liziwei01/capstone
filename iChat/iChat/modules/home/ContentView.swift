@@ -48,11 +48,11 @@ struct ContentView: View {
         }
         .sheet(isPresented: $showingSheet) {
             NewChatSessionView { secretKey, nickname in
-                let dbTime = Now()
                 print(secretKey)
                 print(nickname)
+                let dbTime: Int64 = Now()
                 client.AddSession(secretKey: secretKey, nickname: nickname, dbTime: dbTime)
-                sessions.append(ChatSession(id: Int32(sessions.count), secretKey: secretKey, nickname: nickname, dbTime: dbTime))
+                sessions.append(ChatSession(id: Int32(sessions.count)+1, secretKey: secretKey, nickname: nickname, dbTime: dbTime))
                 showingSheet = false
             }
         }

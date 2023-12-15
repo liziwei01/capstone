@@ -37,12 +37,16 @@ final class iChatTests: XCTestCase {
     
     func testAESEncryptionDecryption() throws {
         // Given
-        let originalString = "This is a string to encrypt"
-        let keyString = "thisisaverysecurekey123456789012"
-        guard let encryptedString = AESEncryptWithString(input: originalString, key: keyString) else {
+        let currentMessage = "This is a string to encrypt"
+        let keyString = "395095"
+        let contentDict: [String: Any] = ["user_nickname": "your friend Q", "body": currentMessage]
+        let jsonData = try? JSONSerialization.data(withJSONObject: contentDict, options: [])
+        let base64Encoded = String(data: jsonData!.base64EncodedData(), encoding: .utf8)!
+        guard let encryptedString = AESEncryptWithString(input: base64Encoded, key: keyString) else {
             XCTFail("Encryption failed")
             return
         }
+        print(encryptedString)
         
         // When
         guard let decryptedString = AESDecryptWithString(input: encryptedString, key: keyString) else {
@@ -51,7 +55,7 @@ final class iChatTests: XCTestCase {
         }
         
         // Then
-        XCTAssertEqual(originalString, decryptedString, "Decrypted string should equal original string")
+        XCTAssertEqual(base64Encoded, decryptedString, "Decrypted string should equal original string")
     }
     
     // Test the creation of a session and retrieval of sessions.
@@ -71,9 +75,9 @@ final class iChatTests: XCTestCase {
     
     // Test the insertion of a message and retrieval of messages for a session.
     func testInsertMessageAndGetMessages() throws {
-        let secretKey = "TestSecretKey"
+        let secretKey = "1234"
         let nickname = "TestUser"
-        let dbTime: Int64 = Int64(Date().timeIntervalSince1970)
+        let dbTime: Int64 = Now()
         
         let message = "Hello, world!"
         

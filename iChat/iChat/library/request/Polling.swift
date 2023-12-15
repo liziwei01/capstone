@@ -27,7 +27,7 @@ extension ChatClient {
         }
     }
     
-    // FIXED: weak self 解决循环引用问题
+    // FIXED: weak self -> Solving circular reference issues
 
     // Fetching chat and update database
     func fetchAndUpdateChats() async throws {
@@ -44,7 +44,9 @@ extension ChatClient {
         let contentsDict = GetChatAPI(secretKey: chatSession.secretKey, lastTime: lastTime)
         // Insert into database
         for contentDict in contentsDict {
+            print("new message:")
             if let time = contentDict["time"] as? Int64 {
+                print(contentDict["body"] as? String ?? "")
                 InsertMessage(sessionID: chatSession.id, isUser: false,  nickname: contentDict["user_nickname"] as? String ?? "",  message: contentDict["body"] as? String ?? "", dbTime: time)
             }
         }

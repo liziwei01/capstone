@@ -34,7 +34,7 @@ class ChatClient {
     init() {
         open()
         deleteSessionTable()
-        deleteMessgaeTable()
+        deleteMessageTable()
         createSessionTable()
         createMessageTable()
     }
@@ -119,9 +119,11 @@ class ChatClient {
     func GetMessages(sessionID: Int32) -> [ChatMessage] {
         var messages: [ChatMessage] = []
 
+        print("searching for session_id:")
+        print(sessionID)
         let queryMessagesSQL = "SELECT id, is_user, nickname, message, db_time FROM tb_chat_message WHERE session_id = ?;"
         if let statement = prepareStatement(sql: queryMessagesSQL) {
-            sqlite3_bind_int(statement, 1, Int32(sessionID))
+            sqlite3_bind_int(statement, 1, sessionID)
             while sqlite3_step(statement) == SQLITE_ROW {
                 let id = Int(sqlite3_column_int(statement, 0))
                 let isUser = sqlite3_column_int(statement, 1) != 0
@@ -267,7 +269,7 @@ class ChatClient {
     }
     
     // Delete session table
-    private func deleteMessgaeTable() {
+    private func deleteMessageTable() {
         let deleteSessionTableSQL = """
             DROP TABLE IF EXISTS tb_chat_message;
         """
